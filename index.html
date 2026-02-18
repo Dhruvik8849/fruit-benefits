@@ -1,13 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fruit Benefits</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightFruits | Premium Night Fruit Delivery</title>
+    <meta name="description" content="Fresh fruit bowls delivered at night. Taste health, feel power with NightFruits.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
-  <h1>🍎 Fruit Benefits</h1>
-  <p>Healthy fruits • Daily nutrition</p>
-  <p><strong>Coming Soon</strong></p>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Night<span>Fruits</span></div>
+        <ul class="nav-links">
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#trust">Why Us</a></li>
+        </ul>
+        <div class="nav-cart-icon" onclick="toggleCartModal()">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count">0</span>
+        </div>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content fade-in">
+            <h1>Fresh Fruits at Night <br> <span class="highlight">Taste Health, Feel Power</span></h1>
+            <p>Discover what every fruit gives your body. Premium cuts delivered to your door.</p>
+            <div class="cta-group">
+                <a href="#menu" class="btn-primary pulse-anim">Order Now</a>
+                <a href="#benefits" class="btn-secondary">Explore Benefits</a>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </header>
+
+    <section id="menu" class="section-padding bg-darker">
+        <div class="container">
+            <h2 class="section-title">Select Your <span class="neon-text">Fruits</span></h2>
+            <p class="section-subtitle">Tap a card to learn why it’s powerful. Use '+' to add to your bowl.</p>
+            
+            <div class="fruit-grid" id="fruit-grid-container">
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Why <span class="neon-text">NightFruits?</span></h2>
+            <div class="grid-3">
+                <div class="feature-card scroll-reveal gradient-digestion">
+                    <div class="icon-wrap">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Better Digestion</h3>
+                    <p>Enjoy a light, refreshing night bowl that soothes the stomach and leaves your morning energized.</p>
+                </div>
+                <div class="feature-card scroll-reveal gradient-metabolism">
+                    <div class="icon-wrap">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Boost Metabolism</h3>
+                    <p>Natural enzymes and fiber help your body rest and recover, supporting healthy metabolic rhythm overnight.</p>
+                </div>
+                <div class="feature-card scroll-reveal gradient-hydration">
+                    <div class="icon-wrap">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Deep Hydration</h3>
+                    <p>Water-rich fruits restore fluids and electrolytes for a calm, well-hydrated sleep and a fresh wake-up.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="contact-cards scroll-reveal">
+                <div class="contact-card brand-card">
+                    <h3>Night<span>Fruits</span></h3>
+                    <p class="tagline">Taste Health, Feel Power.</p>
+                </div>
+                <div class="contact-card details-card">
+                    <h4>Contact</h4>
+                    <div class="detail-row"><i class="fab fa-whatsapp"></i><span>+91 9116601188</span></div>
+                    <div class="detail-row"><i class="fas fa-map-marker-alt"></i><span>Surat, Gujarat</span></div>
+                </div>
+                <div class="contact-card timing-card">
+                    <h4>Timings</h4>
+                    <div class="detail-row"><i class="fas fa-sun"></i><span>Morning: 9:00 AM – 5:00 PM</span></div>
+                    <div class="detail-row"><i class="fas fa-moon"></i><span>Night: 8:00 PM – 12:00+ AM</span></div>
+                </div>
+            </div>
+            <div class="copyright">© 2024 NightFruits. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <div id="sticky-cart-bar" class="sticky-cart hidden">
+        <div class="cart-info" onclick="toggleCartModal()">
+            <div class="cart-icon-wrapper">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="sticky-count">0</span>
+            </div>
+            <span class="view-cart-text">View Cart</span>
+        </div>
+        <button onclick="checkoutWhatsApp()" class="btn-whatsapp-small">
+            Order on WhatsApp <i class="fab fa-whatsapp"></i>
+        </button>
+    </div>
+
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Your Bowl 🥣</h3>
+                <span class="close-cart" onclick="toggleCartModal()">×</span>
+            </div>
+            <div id="cart-items-container" class="cart-items">
+                <p class="empty-msg">Your bowl is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <button onclick="checkoutWhatsApp()" class="btn-whatsapp-full">
+                    Confirm Order on WhatsApp <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="fruitModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeFruitModal()">×</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Added to Cart ✔</div>
+
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
