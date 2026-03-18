@@ -19,7 +19,6 @@ body {
     color: var(--text-white);
     line-height: 1.6;
     overflow-x: hidden;
-    padding-bottom: 80px; /* Space for sticky cart */
 }
 
 h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; }
@@ -93,17 +92,29 @@ button, .add-btn, .btn-primary, .btn-secondary { -webkit-tap-highlight-color: tr
 /* --- Fruit Menu Grid --- */
 .bg-darker { background: #000; }
 .fruit-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;
+    display: flex; gap: 12px; overflow-x: auto; padding: 14px 12px;
+    -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scroll-behavior: smooth; scroll-snap-stop: always;
 }
+.fruit-grid::-webkit-scrollbar { height: 8px; }
+.fruit-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 8px; }
 .fruit-card {
     background: var(--card-bg); border: 1px solid var(--border-glass);
-    border-radius: 15px; padding: 15px; text-align: center;
-    position: relative; transition: 0.3s;
+    border-radius: 14px; padding: 12px; text-align: center;
+    position: relative; transition: transform 0.25s ease, box-shadow 0.25s ease;
+    flex: 0 0 190px; scroll-snap-align: center; min-width: 160px; max-width: 220px;
+    min-height: 200px; /* Slightly increase height for new content */
 }
 .fruit-card:hover { border-color: var(--primary-green); transform: translateY(-6px) scale(1.01); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-.emoji-display { font-size: 3rem; margin-bottom: 5px; cursor: pointer; }
+.emoji-display { font-size: 3.2rem; margin-bottom: 6px; cursor: pointer; }
 .fruit-card h3 { font-size: 1.1rem; margin-bottom: 3px; }
-.fruit-card p { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 10px; }
+.fruit-card p { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 8px; }
+
+/* New elements */
+.nutrient-tags { display: flex; gap: 4px; justify-content: center; margin-bottom: 6px; }
+.pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 8px; font-size: 0.7rem; color: var(--text-white); }
+.card-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-gray); }
+.calories { font-weight: 600; }
+.indicator { font-style: italic; }
 
 /* make entire card clickable on small screens */
 .fruit-card { cursor: pointer; }
@@ -118,23 +129,41 @@ button, .add-btn, .btn-primary, .btn-secondary { -webkit-tap-highlight-color: tr
 
 .add-btn:active { transform: scale(0.98); }
 
-/* --- Sticky Bottom Cart --- */
+/* --- Cart Section (Below Fruit Slider) --- */
 .sticky-cart {
-    position: fixed; bottom: 0; left: 0; width: 100%;
-    background: #1a1a1a; border-top: 1px solid var(--primary-green);
-    padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
-    z-index: 999; box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
-    transition: transform 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-.sticky-cart.hidden { transform: translateY(100%); }
 
-.cart-info { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.cart-icon-wrapper { position: relative; font-size: 1.5rem; color: var(--text-white); }
-.view-cart-text { font-size: 0.9rem; color: var(--text-gray); }
+.cart-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-white);
+}
+
+.cart-info i {
+    font-size: 1.4rem;
+}
 
 .btn-whatsapp-small {
-    background: #25D366; border: none; color: white; padding: 10px 20px;
-    border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 /* --- Cart Modal --- */
@@ -171,19 +200,19 @@ button, .add-btn, .btn-primary, .btn-secondary { -webkit-tap-highlight-color: tr
 .toast {
     visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
     text-align: center; border-radius: 5px; padding: 16px; position: fixed;
-    z-index: 3000; left: 50%; bottom: 80px; transform: translateX(-50%);
+    z-index: 3000; left: 50%; bottom: 20px; transform: translateX(-50%);
     font-size: 17px; border: 1px solid var(--primary-green);
 }
 .toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 80px; opacity: 1;} }
-@keyframes fadeout { from {bottom: 80px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 20px; opacity: 1;} }
+@keyframes fadeout { from {bottom: 20px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
     .navbar { padding: 15px; }
     .nav-links { display: none; }
     .hamburger { display: block; }
-    .fruit-grid { grid-template-columns: repeat(2, 1fr); }
+
     .hero h1 { font-size: 2rem; }
     .footer-grid { grid-template-columns: 1fr; text-align: center; }
 }
@@ -256,3 +285,18 @@ button, .add-btn, .btn-primary, .btn-secondary { -webkit-tap-highlight-color: tr
     .emoji-display { font-size: 3.6rem; }
     .modal .modal-content { padding: 16px; border-radius:12px; }
 }
+
+/* Contextual popup card for fruits */
+.fruit-popup {
+    position: fixed; z-index: 4000; width: 300px; max-width: 92%;
+    background: linear-gradient(180deg, rgba(18,18,18,0.98), #0f0f0f);
+    border: 1px solid rgba(0,242,96,0.12); border-radius: 12px; padding: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.55); color: var(--text-white);
+    -webkit-tap-highlight-color: transparent;
+    animation: popupIn 220ms cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes popupIn { from { transform: translateY(6px) scale(0.99); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.fruit-popup .modal-emoji { font-size: 2.4rem; }
+.fruit-popup .pill { font-size: 0.82rem; padding:6px 8px; }
+.fruit-popup .btn-primary { padding:8px 12px; font-size:0.95rem; }
+.fruit-popup .btn-secondary { padding:8px 12px; font-size:0.95rem; }
