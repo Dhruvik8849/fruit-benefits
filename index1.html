@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order | NightFruits</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { display:flex; flex-direction:column; min-height:100vh; }
+        .order-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,0.04); background:#070707; }
+        .order-title { font-family: var(--font-head); font-size:1.2rem; color:var(--primary-green); }
+        .order-container { flex:1; padding:16px; max-width:720px; margin:0 auto; width:100%; }
+        .order-list { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+        .order-card { display:flex; align-items:center; gap:12px; background:#0f0f0f; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+        .order-emoji { font-size:2rem; }
+        .order-name { flex:1; font-weight:600; }
+        .remove-btn { background:none; border:none; color:var(--neon-orange); font-size:1.1rem; cursor:pointer; }
+        .empty-state { text-align:center; color:var(--text-gray); margin-top:40px; }
+        .actions { display:flex; gap:10px; margin-top:18px; }
+        .sticky-order-btn { position: sticky; bottom: 0; padding: 12px; background: linear-gradient(180deg,#0b0b0b,#0f0f0f); border-top:1px solid #222; }
+    </style>
+</head>
+<body>
+
+    <header class="order-header">
+        <button onclick="window.location.href='index.html'" class="back-btn" aria-label="Back" style="background:none;border:none;color:var(--text-white);font-size:1.3rem;cursor:pointer">←</button>
+        <div class="order-title">Your Order 🥣</div>
+    </header>
+
+    <main class="order-container">
+        <div id="order-root">
+            <h3>Items in your bowl</h3>
+            <div id="order-list" class="order-list"></div>
+
+            <div id="empty" class="empty-state" style="display:none;">
+                <p>Your cart is empty</p>
+                <button class="btn-primary" onclick="window.location.href='index.html'">Add Fruits</button>
+            </div>
+
+            <div class="actions">
+                <button class="btn-secondary" onclick="window.location.href='index.html'">Add More Fruits</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="sticky-order-btn">
+        <div class="container">
+            <button id="checkout-wa" class="btn-whatsapp-full">Place Order on WhatsApp <i class="fab fa-whatsapp"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Load cart and render
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('nightFruitsCart')) || [];
+            const list = document.getElementById('order-list');
+            const empty = document.getElementById('empty');
+            list.innerHTML = '';
+            if (cart.length === 0) {
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+            cart.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'order-card';
+                el.innerHTML = `
+                    <div class="order-emoji">${item.emoji}</div>
+                    <div class="order-name">${item.name}</div>
+                    <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function removeFromCart(id) {
+            let cart = JSON.parse(localStorage.getItem('nightFruitsCart')) || [];
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('nightFruitsCart', JSON.stringify(cart));
+            location.reload();
+        }
+
+        function checkoutWhatsApp() {
+            let cart = JSON.parse(localStorage.getItem('nightFruitsCart')) || [];
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            let message = "Hello NightFruits 🍉,%0A%0AMy Name:%0AMy Address:%0A%0AI would like to order the following fruits:%0A";
+            cart.forEach(item => {
+                message += `- ${item.name} ${item.emoji}%0A`;
+            });
+            message += "%0A%0APlease confirm my order and share delivery details.%0A%0AThank you! 😊";
+            window.open(`https://wa.me/919116601188?text=${message}`, '_blank');
+        }
+
+        document.getElementById('checkout-wa').addEventListener('click', checkoutWhatsApp);
+        window.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>
