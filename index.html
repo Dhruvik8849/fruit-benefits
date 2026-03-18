@@ -12,13 +12,9 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo">Night<span>Fruits</span></div>
-        <ul class="nav-links">
-            <li><a href="#benefits">Benefits</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#trust">Why Us</a></li>
-        </ul>
-        <div class="nav-cart-icon" onclick="toggleCartModal()">
+        <div class="logo"><h2>Prem<span>Anand</span></h2></div>
+        
+        <div id="nav-cart-icon" class="nav-cart-icon">
             <i class="fas fa-shopping-basket"></i>
             <span id="cart-count">0</span>
         </div>
@@ -42,11 +38,20 @@
     <section id="menu" class="section-padding bg-darker">
         <div class="container">
             <h2 class="section-title">Select Your <span class="neon-text">Fruits</span></h2>
-            <p class="section-subtitle">Tap a card to learn why it’s powerful. Use '+' to add to your bowl.</p>
+            <p class="section-subtitle">Use '+' to add to your bowl.</p>
             
             <div class="fruit-grid" id="fruit-grid-container">
             </div>
-        </div>
+            <div id="sticky-cart-bar" class="sticky-cart">
+                <div class="cart-info" onclick="window.location.href='index1.html'">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="sticky-count">0</span>
+                    <span>View Cart</span>
+                </div>
+                <button id="sticky-whatsapp-btn" class="btn-whatsapp-small">
+                    Order on WhatsApp
+                </button>
+            </div>        </div>
     </section>
 
     <section id="benefits" class="section-padding">
@@ -82,9 +87,9 @@
         <div class="container">
             <div class="contact-cards scroll-reveal">
                 <div class="contact-card brand-card">
-                    <h3>Night<span>Fruits</span></h3>
-                    <p class="tagline">Taste Health, Feel Power.</p>
-                </div>
+    <h3>Prem<span>Anand</span></h3>
+    <p class="tagline">Fuel Your Body • Fill Your Soul with Prem & Anand ✨</p>
+</div>
                 <div class="contact-card details-card">
                     <h4>Contact</h4>
                     <div class="detail-row"><i class="fab fa-whatsapp"></i><span>+91 9116601188</span></div>
@@ -96,34 +101,21 @@
                     <div class="detail-row"><i class="fas fa-moon"></i><span>Night: 8:00 PM – 12:00+ AM</span></div>
                 </div>
             </div>
-            <div class="copyright">© 2024 NightFruits. All Rights Reserved.</div>
+            <div class="copyright">© 2025 @Nyxel_d All Rights Reserved.</div>
         </div>
     </footer>
-
-    <div id="sticky-cart-bar" class="sticky-cart hidden">
-        <div class="cart-info" onclick="toggleCartModal()">
-            <div class="cart-icon-wrapper">
-                <i class="fas fa-shopping-bag"></i>
-                <span id="sticky-count">0</span>
-            </div>
-            <span class="view-cart-text">View Cart</span>
-        </div>
-        <button onclick="checkoutWhatsApp()" class="btn-whatsapp-small">
-            Order on WhatsApp <i class="fab fa-whatsapp"></i>
-        </button>
-    </div>
 
     <div id="cart-modal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
                 <h3>Your Bowl 🥣</h3>
-                <span class="close-cart" onclick="toggleCartModal()">×</span>
+                <span id="close-cart-btn" class="close-cart">×</span>
             </div>
             <div id="cart-items-container" class="cart-items">
                 <p class="empty-msg">Your bowl is empty.</p>
             </div>
             <div class="cart-footer">
-                <button onclick="checkoutWhatsApp()" class="btn-whatsapp-full">
+                <button id="whatsapp-full-btn" class="btn-whatsapp-full">
                     Confirm Order on WhatsApp <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
@@ -132,7 +124,7 @@
 
     <div id="fruitModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeFruitModal()">×</span>
+            <span id="fruit-modal-close" class="close-btn">×</span>
             <div id="modal-body"></div>
         </div>
     </div>
